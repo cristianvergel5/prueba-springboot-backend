@@ -30,10 +30,6 @@ public class CartController {
 		modelMap.put("totalShippingCost", totalShippingCost(session));
 		modelMap.put("ValueTotal", ValueTotal(session));
 		modelMap.put("ValueTotalEnvio", ValueTotalEnvio(session));
-		
-		
-		
-		
 		return "cart/index";
 	}
 	
@@ -81,7 +77,7 @@ public class CartController {
 		  }
 		  session.setAttribute("cart", cart);
 		  
-		return "redirect:../../cart";
+		return "redirect:../cart";
 	}
 	
 	//buscar id en list de Items
