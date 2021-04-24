@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+</head>
+<body>
+	<h3> Informacion del carrito</h3>
+	<h2> Por compras superiores a $100.000 mil pesos el envio es !GRATIS!</h2>
+	
+	<form method="post" th:action="${'/cart/update'}">
+		<table border="1">
+			<tr>
+				<th>Opciones</th>
+				<th>Id</th>
+				<th>Nombre</th>
+				<th>Descripcion</th>
+				<th>Foto</th>
+				<th>Precio</th>
+				<th>Valor envio</th>
+				<th>
+					Cantidad
+					<input type="submit" value="update" />
+				</th>
+				
+				
+			</tr>
+			<tr th:each="item : ${session.cart}">
+				<td align="center">
+					<a th:href="${ '/cart/remove/' + item.product.id}"> X </a> 
+				</td>
+				
+				<td th:text="${item.product.id}"> </td>
+				<td th:text="${item.product.name}"> </td>
+				<td th:text="${item.product.description}"> </td>
+					<td>
+					<img th:src="${item.product.photo}" width="120">
+				</td>
+				<td th:text="${'$' + item.product.price}"> </td>
+				<td th:text="${'$' + item.product.shippingCost}"> </td>
+				
+				<td>
+					<input type="number" th:value="${item.quantity}" name="quantity" style="width: 50px"/>
+				 </td>
+				
+			</tr>
+	
+				<tr>
+					<td colspan="7"> Total a pagar</td>
+					<td th:text="${ '$' + totalShippingCost}"> </td>
+				</tr>
+				<tr>
+					<td colspan="7"> Total sin envio</td>
+					<td th:text="${ '$' +  ValueTotal}"> </td>
+				</tr>
+				<tr>
+					<td colspan="7"> Total acumulado de envios</td>
+					<td th:text="${ '$' +  ValueTotalEnvio}"> </td>
+				</tr>
+		
+		</table>
+		
+	</form>
+	<br/>
+		<a th:href="${ '/product'}"> continue comprando</a>
+
+</body>
+</html>
