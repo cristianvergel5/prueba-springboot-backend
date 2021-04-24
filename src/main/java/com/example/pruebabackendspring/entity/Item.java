@@ -1,6 +1,10 @@
 package com.example.pruebabackendspring.entity;
 
-public class Item {
+public class Item implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Product product;
 	private int quantity;
 	public Product getProduct() {

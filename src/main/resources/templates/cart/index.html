@@ -49,20 +49,15 @@
 					<td colspan="7"> Total a pagar</td>
 					<td th:text="${ '$' + totalShippingCost}"> </td>
 				</tr>
-				<tr>
-					<td colspan="7"> Total sin envio</td>
-					<td th:text="${ '$' +  ValueTotal}"> </td>
-				</tr>
-				<tr>
-					<td colspan="7"> Total acumulado de envios</td>
-					<td th:text="${ '$' +  ValueTotalEnvio}"> </td>
-				</tr>
+				
 		
 		</table>
 		
 	</form>
 	<br/>
-		<a th:href="${ '/product'}"> continue comprando</a>
+		<a th:href="${'/product'}"> Continue comprando</a>
+		<a th:href="${'/cart/checkout'}"> Verificar</a>
+		
 
 </body>
 </html>

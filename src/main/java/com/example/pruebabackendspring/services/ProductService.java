@@ -1,7 +1,5 @@
 package com.example.pruebabackendspring.services;
 
-
-
 import com.example.pruebabackendspring.entity.Product;
 
 public interface ProductService {

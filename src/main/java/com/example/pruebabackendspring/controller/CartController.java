@@ -28,8 +28,8 @@ public class CartController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String index(ModelMap modelMap ,HttpSession session) {
 		modelMap.put("totalShippingCost", totalShippingCost(session));
-		modelMap.put("ValueTotal", ValueTotal(session));
-		modelMap.put("ValueTotalEnvio", ValueTotalEnvio(session));
+//		modelMap.put("ValueTotal", ValueTotal(session));
+//		modelMap.put("ValueTotalEnvio", ValueTotalEnvio(session));
 		return "cart/index";
 	}
 	
@@ -80,6 +80,17 @@ public class CartController {
 		return "redirect:../cart";
 	}
 	
+	//verificar
+	@RequestMapping(value= "checkout",method = RequestMethod.GET)
+	public String checkout(HttpSession session) {
+		if(session.getAttribute("username") == null) {
+			return "redirect:../account";
+		} else {
+			return "orders/thanks";
+		}
+	}
+
+	
 	//buscar id en list de Items
 	private int IsExists(int id, List<Item> cart) {
 		for(int i = 0; i < cart.size(); i++	) {
@@ -90,9 +101,10 @@ public class CartController {
 		return -1;
 	}
 	
-	
-	
 
+	
+	
+	// Metodo para descontar el envio si el pedido es mayor a $100000 (item 2 de la prueba)
 	private double totalShippingCost(HttpSession session) {
 		List<Item> cart = (List<Item>) session.getAttribute("cart");
 		
@@ -101,13 +113,21 @@ public class CartController {
 		double total = 0;
 		double priceMax = 100000.0;
 		
-		for(Item item : cart) {
-			priceItems += item.getQuantity() * item.getProduct().getPrice().doubleValue();		
+		if(cart!=null) {
+			for(Item item : cart) {
+				priceItems += item.getQuantity() * item.getProduct().getPrice().doubleValue();		
+			}
 		}
-		for(Item item:cart) {
-			shippingCost += item.getQuantity() * item.getProduct().getShippingCost().doubleValue();
+			
+		if(cart!=null) {
+			for(Item item:cart) {
+				shippingCost += item.getQuantity() * item.getProduct().getShippingCost().doubleValue();
+			}
+		
 		}
 		
+	
+			
 		
 		
 		if(priceItems > priceMax) {
@@ -120,13 +140,19 @@ public class CartController {
 		
 	}
 	
+	
+	
 	private double ValueTotal(HttpSession session) {
 		List<Item> cart = (List<Item>) session.getAttribute("cart");
 		
 		double s = 0;
-		for(Item item : cart) {
-			s+= item.getQuantity() * item.getProduct().getPrice().doubleValue();	
+		
+		if(cart!=null) {
+			for(Item item : cart) {
+				s+= item.getQuantity() * item.getProduct().getPrice().doubleValue();	
+			}
 		}
+		
 		return s;
 		
 	}
@@ -135,9 +161,13 @@ public class CartController {
 		List<Item> cart = (List<Item>) session.getAttribute("cart");
 		
 		double s = 0;
-		for(Item item : cart) {
-			s+=item.getQuantity() * item.getProduct().getShippingCost().doubleValue();
+		
+		if(cart!=null) {
+			for(Item item : cart) {
+				s+=item.getQuantity() * item.getProduct().getShippingCost().doubleValue();
+			}
 		}
+		
 		return s;
 		
 	}
