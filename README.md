@@ -8,7 +8,7 @@ https://github.com/cristianvergel5/prueba-springboot-backend.git
 ```
 
 ## Creando Database
-![home](products.png)
+![home](database.png)
 
 ## Pasos para deplegar el proyecto de forma local
 
