@@ -1,6 +1,9 @@
 # Prueba-Backend-SpringBoot
 
-Desarrolado en SpringTools, usando lenguaje Java
+Desarrolado en SpringTools, usando lenguaje Java.
+El reto es el siguiente:
+"Dado que un cliente quiere agregar a su pedido un nuevo producto cuando el pedido era por valor de 70 mil pesos y al agregar el nuevo producto el pedido pasa de 100 mil pesos entonces el sistema debe de restar el valor del domicilio."
+
 
 ## Descargar y descomprimir el repositorio
 ```
