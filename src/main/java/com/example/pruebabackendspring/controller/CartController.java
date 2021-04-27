@@ -2,6 +2,7 @@ package com.example.pruebabackendspring.controller;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.pruebabackendspring.entity.Item;
+import com.example.pruebabackendspring.entity.Orders;
+import com.example.pruebabackendspring.services.AccountService;
+import com.example.pruebabackendspring.services.OrdersService;
 import com.example.pruebabackendspring.services.ProductService;
 
 @Controller
@@ -23,6 +27,12 @@ public class CartController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private AccountService accountService;
+	
+	@Autowired
+	private OrdersService orderService;
 	
 	//Listar carrito
 	@RequestMapping(method = RequestMethod.GET)
@@ -86,6 +96,22 @@ public class CartController {
 		if(session.getAttribute("username") == null) {
 			return "redirect:../account";
 		} else {
+			//agregar orden
+			Orders orders = new Orders();
+			orders.setAccount(accountService.findByID(session.getAttribute("username").toString()));
+			orders.setCreateAt(new Date());
+			orders.setName("nueva orden");
+			orders.setStatus(false);
+			int OrderId = orderService.create(orders).getId();
+			
+			//add order detail
+			
+			
+			
+			
+			//Eliminar carrito
+			session.removeAttribute("cart");
+			
 			return "orders/thanks";
 		}
 	}
@@ -172,11 +198,5 @@ public class CartController {
 		
 	}
 	
-	
-	
-	
-	
-	
-		
 
 }
