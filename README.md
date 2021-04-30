@@ -2,7 +2,17 @@
 
 Desarrolado en SpringTools, usando lenguaje Java.
 El reto es el siguiente:
-"Dado que un cliente quiere agregar a su pedido un nuevo producto cuando el pedido era por valor de 70 mil pesos y al agregar el nuevo producto el pedido pasa de 100 mil pesos entonces el sistema debe de restar el valor del domicilio."
+
+
+- "Dado un cliente con la cedula de ciudadanía 12345 y con la dirección carrera 11# 14-08, cuando el
+cliente selecciona los productos a comprar con un valor mayor de 70.000 pesos entonces el sistema
+genera la factura con el iva (Impuesto del 19%) y el valor del domicilio."
+
+ - "Dado un cliente con la cedula de ciudadanía 12345 y con la dirección carrera 11# 14-08, cuando el
+cliente selecciona los productos a comprar con un valor mayor de 100.000 pesos entonces el sistema genera la factura con eliva (Impuestodel19%) y el valor de ldomicilio en 0 pesos."
+
+
+- "Dado que un cliente quiere agregar a su pedido un nuevo producto cuando el pedido era por valor de 70 mil pesos y al agregar el nuevo producto el pedido pasa de 100 mil pesos entonces el sistema debe de restar el valor del domicilio."
 
 
 ## Descargar y descomprimir el repositorio
@@ -53,6 +63,7 @@ server.port=9196
 ```
 Login = http://localhost:9196/account 
 Lista de Productos = http://localhost:9196/product
+Todas las ordenes = http://localhost:9196/orders
 ```
 
 ## Funcionamiento y vistas.
