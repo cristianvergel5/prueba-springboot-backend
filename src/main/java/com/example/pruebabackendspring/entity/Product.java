@@ -1,15 +1,25 @@
 package com.example.pruebabackendspring.entity;
 
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 
 @Entity
-public class Product {
-    @Id
+public class Product implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
@@ -21,6 +31,32 @@ public class Product {
     private Float price;
     private Float quantity;
     private Float shippingCost;
+	
+    
+
+    
+    
+    
+    public Product() {
+		super();
+	}
+	public Product(Integer id, String name, String code, String description, String photo, Float price, Float quantity,
+			Float shippingCost, OrdersDetail ordersdetail) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.code = code;
+		this.description = description;
+		this.photo = photo;
+		this.price = price;
+		this.quantity = quantity;
+		this.shippingCost = shippingCost;
+
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	public Integer getId() {
 		return id;
 	}

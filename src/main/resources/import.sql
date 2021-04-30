@@ -5,7 +5,10 @@ INSERT INTO Product (id,code,description,name,photo,price,quantity,shippingCost)
 INSERT INTO Product	(id,code,description,name,photo,price,quantity,shippingCost) VALUES(3,'33258','talla 35','Zapatos formales para dama','https://firebasestorage.googleapis.com/v0/b/ingreso-egreso-app-461cd.appspot.com/o/zapato3.gif?alt=media&token=df4d1ecf-d812-4c51-aac9-cdb8a45aa52d',40000.0,20.0,20000.0);
 
 
+
+
+
 #datos usuario para pruebas
 # username = usuario
 # password = 1234
-INSERT INTO Account (username,email,fullname,password) VALUES ('usuario','prueba@prueba.com','usuario prueba','$2a$10$kX8SB17vwiNeZXdfrYQSauStkWMf0iLZYPmEfS6GtS5rlGkb/5vte');
+INSERT INTO Account (username,email,fullname,password, idDocument, adress) VALUES ('usuario','prueba@prueba.com','usuario prueba','$2a$10$kX8SB17vwiNeZXdfrYQSauStkWMf0iLZYPmEfS6GtS5rlGkb/5vte', '9876543', 'calle 70 #30-80');

@@ -1,5 +1,7 @@
  package com.example.pruebabackendspring.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +59,18 @@ public class AccountController {
 		
 	}
 	
+	//buscar id en lista de cuentas
+	
+//	private String isExistsAccount(int id, List<allAccount> account) {
+//		for(int i=0; i< account.size(); i++) {
+//				if(account.get()) {
+//					return i;
+//				}
+//		}
+//		return -1;
+//	}
+	
+
 		
 	
 }

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+</head>
+<body>
+	<h3> Lista de Ordenes</h3>
+	<table border="1">
+		<tr>
+			<th>Id de orden</th>
+			<th>Fecha</th>
+			<th>Nombre</th>
+			<th>Cliente</th>
+			<th>Prueba</th>
+			
+		
+		</tr>
+		<tr th:each="order : ${orders}">
+			<td th:text="${order.id}"> </td>
+			<td th:text="${order.createAt}"> </td>
+			<td th:text="${order.name}"> </td>		
+			
+			<td>
+				<a th:href="${ '/order/ordersList/' + order.id}"> Ordenes</a> 
+			</td>
+		
+		</tr>
+		
+
+		
+	</table>
+
+</body>
+</html>

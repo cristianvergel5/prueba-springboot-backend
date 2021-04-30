@@ -43,6 +43,12 @@ public class AccountServiceImpl implements AccountService {
 		return accountDao.findById(username).orElse(null);
 	}
 
+	@Override
+	public Iterable<Account> findAll() {
+		// TODO Auto-generated method stub
+		return accountDao.findAll();
+	}
+
 
 	
 

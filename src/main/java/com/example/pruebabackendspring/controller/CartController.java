@@ -1,9 +1,10 @@
 package com.example.pruebabackendspring.controller;
 
-
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,9 +16,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+
 import com.example.pruebabackendspring.entity.Item;
 import com.example.pruebabackendspring.entity.Orders;
+import com.example.pruebabackendspring.entity.OrdersDetail;
+import com.example.pruebabackendspring.entity.Product;
 import com.example.pruebabackendspring.services.AccountService;
+import com.example.pruebabackendspring.services.OrdersDetailService;
 import com.example.pruebabackendspring.services.OrdersService;
 import com.example.pruebabackendspring.services.ProductService;
 
@@ -34,12 +39,16 @@ public class CartController {
 	@Autowired
 	private OrdersService orderService;
 	
-	//Listar carrito
+	@Autowired
+	private OrdersDetailService ordersDetailService;
+
+	// calcula costo de compra
 	@RequestMapping(method = RequestMethod.GET)
 	public String index(ModelMap modelMap ,HttpSession session) {
 		modelMap.put("totalShippingCost", totalShippingCost(session));
-//		modelMap.put("ValueTotal", ValueTotal(session));
-//		modelMap.put("ValueTotalEnvio", ValueTotalEnvio(session));
+		modelMap.put("ValueTotal", ValueTotal(session));
+		modelMap.put("ValueTotalEnvio", ValueTotalEnvio(session));
+		
 		return "cart/index";
 	}
 	
@@ -98,21 +107,36 @@ public class CartController {
 		} else {
 			//agregar orden
 			Orders orders = new Orders();
-			orders.setAccount(accountService.findByID(session.getAttribute("username").toString()));
+			orders.setAccount(accountService.findByID((String) session.getAttribute("username").toString()));
 			orders.setCreateAt(new Date());
 			orders.setName("nueva orden");
 			orders.setStatus(false);
 			int OrderId = orderService.create(orders).getId();
 			
-			//add order detail
+
+			//Agragar detalles de orden
+			List<Item> cart = (List<Item>) session.getAttribute("cart");
 			
+			double total = totalShippingCost(session);
 			
+			Product product = new Product();
 			
+			for(Item item : cart) {
+				
+				OrdersDetail ordersdetail = new OrdersDetail();		
+				ordersdetail.setOrders(orderService.findById(orders.getId()));
+//				ordersdetail.setProduct(productService.findById(product.getId()));
+				ordersdetail.setProductId(item.getProduct().getId());
+				ordersdetail.setPrice(item.getProduct().getPrice());
+				ordersdetail.setPriceTotal((float) total);
+				ordersdetail.setQuantity(item.getQuantity());
+				ordersDetailService.create(ordersdetail);
+			}
 			
 			//Eliminar carrito
 			session.removeAttribute("cart");
 			
-			return "orders/thanks";
+			return "order/thanks";
 		}
 	}
 
@@ -126,9 +150,7 @@ public class CartController {
 		}
 		return -1;
 	}
-	
 
-	
 	
 	// Metodo para descontar el envio si el pedido es mayor a $100000 (item 2 de la prueba)
 	private double totalShippingCost(HttpSession session) {
@@ -136,8 +158,19 @@ public class CartController {
 		
 		double priceItems= 0;
 		double shippingCost = 0;
+		
 		double total = 0;
+		double totalIva = 0;
+				
+		//valor para envio gratis		
 		double priceMax = 100000.0;
+		
+		
+		//valor apartir del cual se cobra iva
+		double priveMaxIva = 70000;
+		
+		
+		double IVA = 0.19;
 		
 		if(cart!=null) {
 			for(Item item : cart) {
@@ -152,18 +185,26 @@ public class CartController {
 		
 		}
 		
-	
-			
 		
 		
-		if(priceItems > priceMax) {
-			total = priceItems;
-		} else {
-			total = priceItems + shippingCost;
+		if(priceItems > priveMaxIva && priceItems<priceMax) {
+			total = priceItems * IVA;
+			totalIva = priceItems + shippingCost +total;
+			return totalIva;
+		} 
+		
+		if (priceItems<priveMaxIva){
+			totalIva = priceItems + shippingCost;
+			return totalIva;
 		}
 		
-		return total;
+		if(priceItems>priceMax) {
+			total = priceItems * IVA;
+			totalIva = priceItems + total;
+		}
+			
 		
+		return totalIva;
 	}
 	
 	
@@ -172,6 +213,7 @@ public class CartController {
 		List<Item> cart = (List<Item>) session.getAttribute("cart");
 		
 		double s = 0;
+		double IVA = 0;
 		
 		if(cart!=null) {
 			for(Item item : cart) {

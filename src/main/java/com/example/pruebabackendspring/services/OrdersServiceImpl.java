@@ -24,4 +24,16 @@ public class OrdersServiceImpl implements OrdersService{
 		return ordersDao.save(orders);
 	}
 
+	@Override
+	public Iterable<Orders> findAll() {
+		// TODO Auto-generated method stub
+		return ordersDao.findAll();
+	}
+
+	@Override
+	public Orders findById(int id) {
+		// TODO Auto-generated method stub
+		return ordersDao.findById(id).orElse(null);
+	}
+
 }
